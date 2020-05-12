@@ -12,11 +12,12 @@
 			if(empty($postData['name']) || ($postData['category'] < 0 && $postData['category'] > 2) || empty($postData['content'])) {
 				echo "Hiányzó adat(ok)!";
 			} else {
-				$query = "INSERT INTO topics (name, category, content) VALUES (:name, :category, :content)";
+				$query = "INSERT INTO topics (name, category, content, timeposted) VALUES (:name, :category, :content, :timeposted)";
 				$params = [
 					':name' => $postData['name'],
 					':category' => $postData['category'],
 					':content' => $postData['content'],
+					':timeposted' => date("Y-m-d H:i:s")
 				];
 				require_once DATABASE_CONTROLLER;
 				if(!executeDML($query, $params)) {
@@ -44,7 +45,7 @@
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<label for="topicContent">Topic Content</label>
-				<input type="text" class="form-control" id="topicContent" name="content">
+				<textarea class="form-control" id="topicContent" name="content" rows="8"></textarea>
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary" name="addTopic">Add Topic</button>

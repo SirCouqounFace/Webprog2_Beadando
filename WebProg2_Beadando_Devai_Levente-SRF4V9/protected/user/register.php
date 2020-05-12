@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
 
 <form method="post">
 	<div class="form-row">
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-12">
 			<label for="registerUsername">User Name</label>
 			<input type="text" class="form-control" id="registerUsername" name="username" value="<?=isset($postData) ? $postData['uname'] : "";?>">
 		</div>

@@ -1,6 +1,15 @@
-
 <?php 
-	$query = "SELECT id, name, user, category, timeposted FROM topics";
+	if(array_key_exists('d', $_GET) && !empty($_GET['d'])) {
+		$query = "DELETE FROM topics WHERE id = :id";
+		$params = [':id' => $_GET['d']];
+		require_once DATABASE_CONTROLLER;
+		if(!executeDML($query, $params)) {
+			echo "Hiba törlés közben!";
+		}
+	}
+?>
+<?php 
+	$query = "SELECT id, name, user, category, timeposted FROM topics ORDER BY points ASC";
 	require_once DATABASE_CONTROLLER;
 	$topics = getList($query);
 ?>
@@ -15,6 +24,8 @@
 					<th scope="col">Post User</th>
 					<th scope="col">Category</th>
 					<th scope="col">Date Posted</th>
+					<th scope="col">Edit</th>
+					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,6 +38,8 @@
 						<td><?=$t['user'] ?></td>
 						<td><?=$t['category'] == 0 ? 'Building' : ($t['category'] == 1 ? 'Games' : 'Other') ?></td>
 						<td><?=$t['timeposted'] ?></td>
+						<td><a href="?P=edit_topic&e=<?=$t['id'] ?>">Edit</a></td>
+						<td><a href="?P=list_topic&d=<?=$t['id'] ?>">Delete</a></td>
 					</tr>
 				<?php endforeach;?>
 			</tbody>
