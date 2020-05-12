@@ -12,12 +12,13 @@
 			if(empty($postData['name']) || ($postData['category'] < 0 && $postData['category'] > 2) || empty($postData['content'])) {
 				echo "Hiányzó adat(ok)!";
 			} else {
-				$query = "INSERT INTO topics (name, category, content, timeposted) VALUES (:name, :category, :content, :timeposted)";
+				$query = "INSERT INTO topics (name, user, category, content, timeposted) VALUES (:name, :user, :category, :content, :timeposted)";
 				$params = [
 					':name' => $postData['name'],
+					':user' => $_SESSION['uname'],
 					':category' => $postData['category'],
 					':content' => $postData['content'],
-					':timeposted' => date("Y-m-d H:i:s")
+					':timeposted' => date("Y-m-d")
 				];
 				require_once DATABASE_CONTROLLER;
 				if(!executeDML($query, $params)) {
