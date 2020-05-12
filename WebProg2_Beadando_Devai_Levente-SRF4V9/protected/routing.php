@@ -12,6 +12,8 @@ switch ($_GET['P']) {
 
 	case 'edit_topic': IsUserLoggedIn() ? require_once PROTECTED_DIR.'topic/edit.php' : header('Location: index.php'); break;
 
+	case 'view_topic': IsUserLoggedIn() ? require_once PROTECTED_DIR.'topic/profile.php' : header('Location: index.php'); break;
+
 	case 'list_topic': IsUserLoggedIn() ? require_once PROTECTED_DIR.'topic/list.php' : header('Location: index.php'); break;
 
 	case 'login': !IsUserLoggedIn() ? require_once PROTECTED_DIR.'user/login.php' : header('Location: index.php'); break;

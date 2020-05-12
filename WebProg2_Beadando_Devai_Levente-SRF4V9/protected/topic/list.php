@@ -9,7 +9,7 @@
 	}
 ?>
 <?php 
-	$query = "SELECT id, name, user, category, timeposted FROM topics ORDER BY points ASC";
+	$query = "SELECT id, name, user, category, timeposted FROM topics ORDER BY timeposted DESC";
 	require_once DATABASE_CONTROLLER;
 	$topics = getList($query);
 ?>
@@ -24,8 +24,10 @@
 					<th scope="col">Post User</th>
 					<th scope="col">Category</th>
 					<th scope="col">Date Posted</th>
-					<th scope="col">Edit</th>
-					<th scope="col">Delete</th>
+					<?php if(!isset($_SESSION['admin']) || $_SESSION['admin'] >= 1) : ?>
+						<th scope="col">Edit</th>
+						<th scope="col">Delete</th>
+					<?php endif ?>
 				</tr>
 			</thead>
 			<tbody>
@@ -38,8 +40,10 @@
 						<td><?=$t['user'] ?></td>
 						<td><?=$t['category'] == 0 ? 'Building' : ($t['category'] == 1 ? 'Games' : 'Other') ?></td>
 						<td><?=$t['timeposted'] ?></td>
-						<td><a href="?P=edit_topic&e=<?=$t['id'] ?>">Edit</a></td>
-						<td><a href="?P=list_topic&d=<?=$t['id'] ?>">Delete</a></td>
+						<?php if(!isset($_SESSION['admin']) || $_SESSION['admin'] >= 1) : ?>
+							<td><a href="?P=edit_topic&e=<?=$t['id'] ?>">Edit</a></td>
+							<td><a href="?P=list_topic&d=<?=$t['id'] ?>">Delete</a></td>
+						<?php endif ?>
 					</tr>
 				<?php endforeach;?>
 			</tbody>
